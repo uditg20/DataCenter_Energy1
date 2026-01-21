@@ -1,0 +1,39 @@
+{
+  "name": "Demo",
+  "mode": "heavy",
+  "timeStepHours": 1,
+  "baseLoadMW": [8, 7, 6, 6, 7, 9, 10, 11],
+  "price": [40, 42, 38, 35, 44, 50, 55, 48],
+  "iso": "ERCOT",
+  "applications": { "pun": true, "btm": false, "ftm": false },
+  "grid": { "importMaxMW": 20, "exportMaxMW": 5 },
+  "bess": {
+    "powerMaxMW": 5,
+    "energyMaxMWh": 10,
+    "optimizeSizing": false,
+    "capexPower": 120000,
+    "capexEnergy": 80000,
+    "efficiencyCharge": 0.95,
+    "efficiencyDischarge": 0.95,
+    "degradationCost": 3
+  },
+  "generators": [{ "name": "Gas Turbine", "pMax": 5, "marginalCost": 70, "available": true }],
+  "workload": {
+    "arrivals": [6, 6, 6, 7, 8, 9, 10, 8],
+    "deadlineHours": 4,
+    "softSla": true,
+    "penaltyDeadline": 150,
+    "curtailmentCap": 0.1,
+    "piecewise": [
+      { "powerMW": 2, "workUnits": 4 },
+      { "powerMW": 4, "workUnits": 7 },
+      { "powerMW": 6, "workUnits": 10 }
+    ],
+    "minComputeMW": 1
+  },
+  "reliability": { "metric": "EnergyReliability", "target": 0.98, "sweep": [0.9, 0.95, 0.98] },
+  "scenarios": [
+    { "name": "Base", "probability": 0.8, "gridImportCap": 20, "generatorDerate": 1 },
+    { "name": "Contingency", "probability": 0.2, "gridImportCap": 10, "generatorDerate": 0.5 }
+  ]
+}
